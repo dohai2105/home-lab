@@ -1,0 +1,23 @@
+Host ubuntu
+        HostName 192.168.0.114
+        Port 22
+        User dohai2105
+        IdentityFile ~/.ssh/local_centos_key
+
+Host master
+        HostName 192.168.0.100
+        Port 22
+        User vagrant
+        IdentityFile ~/.ssh/local_centos_key
+
+Host worker1
+        HostName 192.168.0.101
+        Port 22
+        User vagrant
+        IdentityFile ~/.ssh/local_centos_key
+
+Host worker2
+        HostName 192.168.0.102
+        Port 22
+        User vagrant
+        IdentityFile ~/.ssh/local_centos_key
