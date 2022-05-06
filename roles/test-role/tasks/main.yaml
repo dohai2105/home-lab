@@ -1,0 +1,14 @@
+- name: run the script
+  command: id
+  register: output
+- debug:
+    msg:
+      - " {{ output.stdout }} "
+      - " {{ test_group_var }} "
+
+- name: local dir files (file glob for files)
+  debug: msg="{{ item | replace(playbook_dir + '/', '') }}"
+  with_fileglob:
+    - "../templates/*"
+- name: test lookup pip
+  debug: msg=:"{{lookup('pipe', 'date')}}"

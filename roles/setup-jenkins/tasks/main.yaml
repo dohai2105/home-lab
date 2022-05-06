@@ -1,0 +1,5 @@
+---
+- import_tasks: copy-file.yaml
+  tags: copy-file
+- import_tasks: dc-up.yaml
+  tags: docker-compose

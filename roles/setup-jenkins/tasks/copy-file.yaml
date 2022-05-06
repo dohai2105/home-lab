@@ -1,0 +1,43 @@
+- name: clean
+  file:
+    path: "{{ jenkin_folder }}"
+    state: absent
+  tags: clean
+
+- name: create jenkins directory
+  file:
+    path: "{{ jenkin_folder }}"
+    state: directory
+    owner: vagrant
+    group: vagrant
+  register: jenkins_directory_register
+
+- name: debug
+  debug: msg="{{ jenkins_directory_register }}"
+
+- name: check if created succesfully
+  assert:
+    that:
+      "jenkins_directory_register.state == 'directory' "
+
+- name: copy share lib to vm
+  copy:
+    src: "./shared-lib/vars/"
+    dest: "{{ jenkin_folder }}/shared-lib/vars/"
+    owner: vagrant
+    group: vagrant
+    mode: 0755
+
+- name: copy docker compose, docker file , jenkins, plugin.txt, jenkin as code
+  copy:
+    src: "{{item}}"
+    dest: "{{ jenkin_folder }}/{{item}}"
+    owner: vagrant
+    group: vagrant
+    mode: 0755
+  with_items:
+    - "docker-compose.yaml"
+    - "Dockerfile"
+    - "jenkins.env"
+    - "plugins.txt"
+    - "jenkins.yaml"

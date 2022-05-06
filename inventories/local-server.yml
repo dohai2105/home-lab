@@ -1,0 +1,9 @@
+all:
+  children:
+    master-group:
+      hosts:
+        master:
+    worker-group:
+      hosts:
+        worker1:
+        worker2:

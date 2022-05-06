@@ -1,0 +1,37 @@
+- hosts: master-group
+  become: true
+  tasks:
+    - name: Yum update packages
+      yum:
+        name: "*"
+        state: latest
+    - name: Add docker repo
+      yum_repository:
+        name: docker-ce-stable
+        description: Docker CE Stable Repo
+        baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+        gpgkey: https://download.docker.com/linux/centos/gpg
+        gpgcheck: yes
+      tags: dockerhost
+    - name: Install docker
+      yum: 
+        name:
+          - docker-ce
+          - docker-ce-cli 
+          - containerd.io
+          - docker-compose-plugin 
+        enablerepo: docker-ce-stable 
+        state: latest
+    - name: Add "vagrant" user to "docker" group
+      user:
+        name: "vagrant"
+        groups: "docker"
+        append: yes
+    - name: Install docker-compose from official github repo
+      get_url:
+        url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        owner: vagrant
+        group: vagrant
+        mode: 'u+x,g+x'
+      tags: concac

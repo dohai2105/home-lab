@@ -1,0 +1,5 @@
+- hosts: master-group
+  roles:
+    - role: setup-jenkins
+      become: true
+      test_pb_var: "test_pb_var"

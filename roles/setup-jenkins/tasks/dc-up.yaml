@@ -1,0 +1,7 @@
+- name: docker compose up
+  become: true
+  become_user: vagrant
+  command: "docker-compose up -d"
+  args:
+    chdir: "{{jenkin_folder}}/"
+  

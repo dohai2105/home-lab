@@ -1,0 +1,6 @@
+- hosts: master-group
+  roles:
+    - role: test-role
+      become: true
+      test_pb_var: "test_pb_var"
+      

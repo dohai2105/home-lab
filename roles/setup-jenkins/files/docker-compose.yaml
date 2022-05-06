@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    env_file:
+      - jenkins.env
+    volumes:
+      - "./shared-lib:/tmp/shared-lib"
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    networks:
+      - jenkins
+
+networks:
+  jenkins:
+    driver: bridge
