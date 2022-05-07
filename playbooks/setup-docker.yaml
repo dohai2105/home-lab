@@ -1,4 +1,4 @@
-- hosts: master-group
+- hosts: all
   become: true
   tasks:
     - name: Yum update packages
@@ -27,6 +27,13 @@
         name: "vagrant"
         groups: "docker"
         append: yes
+    - name: Enable and check Docker service
+      systemd:
+        name: docker
+        daemon_reload: yes
+        state: started
+        enabled: yes
+      register: started_docker
     - name: Install docker-compose from official github repo
       get_url:
         url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
@@ -34,4 +41,3 @@
         owner: vagrant
         group: vagrant
         mode: 'u+x,g+x'
-      tags: concac

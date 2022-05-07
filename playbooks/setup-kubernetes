@@ -1,0 +1,18 @@
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - role: setup-kubernetes/master
+    
+- hosts: worker-group
+  gather_facts: yes
+  become: yes
+  roles:
+    - role: setup-kubernetes/workers
+
+# - hosts: master
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: kubernetes/master, tags: master }
+#     - { role: cni, tags: cni }

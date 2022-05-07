@@ -1,0 +1,63 @@
+---
+
+- name: Install Kubernetes packages
+  include_tasks: pkg.yml
+
+- name: Disable and turn off SWAP
+  shell: "swapoff -a"
+
+- name: Remove current swaps from fstab
+  lineinfile:
+    dest: /etc/fstab
+    regexp: '(?i)^([^#][\S]+\s+(none|swap)\s+swap.*)'
+    line: '# \1'
+    backrefs: yes
+    state: present
+
+- name: Stop and Disable firewall
+  ufw :
+    state: disabled
+  ignore_errors: yes 
+
+- name: Load br_netfilter and overlay module
+  shell: "modprobe {{item}}"
+  with_items:
+    - "br_netfilter"
+    - "overlay"
+  tags: concac
+
+# - name: Install containerd runtime (not nessesary now)
+- name: Backup containerd's config file
+  shell: "containerd config default > /etc/containerd/config.toml"
+
+- name: Reset containerd
+  systemd:
+    name: containerd
+    state: restarted
+    enabled: yes
+
+- name: Disable swappiness and pass bridged IPv4 traffic to iptable's chains
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+  with_items:
+    - { name: 'vm.swappiness', value: '0' }
+    - { name: 'net.bridge.bridge-nf-call-iptables', value: '1' }
+    - { name: 'net.bridge.bridge-nf-call-iptables', value: '1' }
+    - { name: 'net.ipv4.ip_forward', value: '1' }
+
+- name: Create service drop-in directory
+  file:
+    path: /etc/systemd/system/kubelet.service.d/
+    state: directory
+    mode: 0755
+
+- name: Copy kubeadm conf to drop-in directory
+  template: src=20-extra-args.conf.j2 dest=/etc/systemd/system/kubelet.service.d/20-extra-args.conf
+
+- name: Reload kubelet daemon
+  systemd:
+    name: kubelet
+    daemon_reload: yes
+    enabled: yes

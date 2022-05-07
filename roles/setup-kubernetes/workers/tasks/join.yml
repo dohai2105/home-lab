@@ -1,0 +1,14 @@
+---
+- name: Reset Kubernetes component
+  shell: "kubeadm reset --force --cri-socket=/var/run/{{ container_runtime }}/{{ container_runtime }}.sock"
+  register: reset_cluster
+
+- name: Join to Kubernetes cluster
+  when: reset_cluster is succeeded
+  shell: "{{hostvars['master'].join_script}}"
+  register: join_cluster
+  # See: https://github.com/jetstack/cert-manager/issues/2640 with using kubeadm + calico + cert-manager
+  environment:
+    no_proxy: "$no_proxy,.svc,.svc.cluster.local"
+  notify:
+    - Recreate kube-dns

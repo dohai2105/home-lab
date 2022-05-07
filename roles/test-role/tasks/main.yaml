@@ -3,12 +3,13 @@
   register: output
 - debug:
     msg:
-      - " {{ output.stdout }} "
-      - " {{ test_group_var }} "
+      # - " {{ output.stdout }} "
+      # - " {{ test_group_var }} "
+      - " {{ ansible_default_ipv4.address }} "
 
-- name: local dir files (file glob for files)
-  debug: msg="{{ item | replace(playbook_dir + '/', '') }}"
-  with_fileglob:
-    - "../templates/*"
-- name: test lookup pip
-  debug: msg=:"{{lookup('pipe', 'date')}}"
+# - name: local dir files (file glob for files)
+#   debug: msg="{{ item | replace(playbook_dir + '/', '') }}"
+#   with_fileglob:
+#     - "../templates/*"
+# - name: test lookup pip
+#   debug: msg=:"{{lookup('pipe', 'date')}}"
