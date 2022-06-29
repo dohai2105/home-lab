@@ -9,7 +9,7 @@ kubeadm_opts: ""
 # kubeadm_opts: '--apiserver-cert-extra-sans "k8s.domain.com,kubernetes.domain.com"'
 
 service_cidr: "10.96.0.0/12"
-pod_network_cidr: "192.168.0.0/16"
+pod_network_cidr: "198.51.100.0/24"
 
 container_runtime: containerd
 kubeadmin_config: /etc/kubernetes/admin.conf

@@ -5,7 +5,7 @@
     msg:
       # - " {{ output.stdout }} "
       # - " {{ test_group_var }} "
-      - " {{ ansible_default_ipv4.address }} "
+      - " {{ hostvars['worker1'].master-group[0] }} "
 
 # - name: local dir files (file glob for files)
 #   debug: msg="{{ item | replace(playbook_dir + '/', '') }}"
