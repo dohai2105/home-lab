@@ -44,3 +44,55 @@ Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false --node-ip={{ nodeIP }}"
 ```
 ansible-playbook playbooks/setup-kubernetes  
 ```
+
+
+## Note: Setup kubernet dashboard
+
+### Create service account and cluster role binding
+
+```
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+```
+
+### Create corresponding secret
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+  annotations:
+    kubernetes.io/service-account.name: "admin-user"
+type: kubernetes.io/service-account-token
+data:
+  # You can include additional key value pairs as you do with Opaque Secrets
+  extra: abcd
+```
+
+### Show token
+```
+kl describe secret admin-user  -n kubernetes-dashboard
+```
+
