@@ -27,6 +27,15 @@ Vagrant.configure(2) do |config|
 
     # node.vm.provision "shell", path: "bootstrap_kmaster.sh"
 
+    node.vm.provision "shell",
+      run: "always",
+      inline: "route add default gw 192.168.0.1"
+    # node.vm.provision "shell", path: "bootstrap_kmaster.sh"
+
+  # delete default gw on eth0
+    node.vm.provision "shell",
+      run: "always",
+      inline: "eval `route -n | awk '{ if ($8 ==\"eth0\" && $2 != \"0.0.0.0\") print \"route del default gw \" $2; }'`"
   end
 
 
@@ -47,4 +56,14 @@ Vagrant.configure(2) do |config|
         v.name    = "worker#{i}"
         v.memory  = 1024
         v.cpus    = 1
+
+      node.vm.provision "shell",
+        run: "always",
+        inline: "route add default gw 192.168.0.1"
+      # node.vm.provision "shell", path: "bootstrap_kmaster.sh"
+  
+      # delete default gw on eth0
+      node.vm.provision "shell",
+        run: "always",
+        inline: "eval `route -n | awk '{ if ($8 ==\"eth0\" && $2 != \"0.0.0.0\") print \"route del default gw \" $2; }'`"
       end
