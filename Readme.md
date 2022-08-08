@@ -1,4 +1,4 @@
-# Playing devops note
+# My homelab setup
 
 ## Run ansible for kubernete
 
@@ -16,7 +16,7 @@ Ex: scp -r master:~/.kube/config ~/.kube/config_mycluster
 ```
 
 
-## Note: Set eth1 to internal Ip ( default is eth0 - 10.0.2.15) for each node when use Vagrantfile
+## Note: Set eth1 to internal Ip ( default is eth0 - 10.0.2.15) for each node when use Vagrantfile (fix issue that cannot exec on a pod)
 
 ### Add following setting to Vagrantfile
 
