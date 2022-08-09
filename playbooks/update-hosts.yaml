@@ -5,8 +5,8 @@
     - name: Update /etc/hosts
       lineinfile:
         path: /etc/hosts
-        line: "{{ item }}"
-      with_items: 
-        "{{ alias_hosts }}"
+        line: "{{ hostvars[item].host_ip }} {{ hostvars[item].host_name }}"
+      when: hostvars[item].host_name is defined
+      with_items: "{{ groups.all }}"
     # - name: "dump variables hostvars"
-    #   debug: var=alias_hosts
+    #   debug: var=local_dns_hosts
