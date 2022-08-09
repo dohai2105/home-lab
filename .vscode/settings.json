@@ -1,5 +1,0 @@
-{
-    "yaml.schemas": {
-        "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json#/$defs/playbook": "file:///Users/dohai2105/Documents/LEARN/Kubernate/ansible/playbooks/setup-kubernetes.yaml"
-    }
-}
