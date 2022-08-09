@@ -36,7 +36,7 @@ Ex: scp -r master:~/.kube/config ~/.kube/config_mycluster
 
 ```
 [Service]
-Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false --node-ip={{ nodeIP }}"
+Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false --node-ip={{ kubernate_node_ip }}"
 ```
 
 ### Rerun

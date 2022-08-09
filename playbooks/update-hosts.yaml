@@ -1,0 +1,12 @@
+- hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Update /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "{{ item }}"
+      with_items: 
+        "{{ alias_hosts }}"
+    # - name: "dump variables hostvars"
+    #   debug: var=alias_hosts
