@@ -4,7 +4,7 @@
   roles:
     - role: setup-kubernetes/master
     
-- hosts: worker-group
+- hosts: workers
   gather_facts: true
   become: true
   roles:

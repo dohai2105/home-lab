@@ -1,6 +1,5 @@
-[master-group]
+[master_group]
 master
-
-[woker-group]
+[worker_group]
 worker1
 worker2

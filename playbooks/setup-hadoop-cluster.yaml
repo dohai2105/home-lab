@@ -1,0 +1,18 @@
+- hosts: master
+  become: true
+  vars:
+    generate_key: true
+  roles:
+    - setup-hadoop-cluster/user
+    - setup-hadoop-cluster/fetch_public_key
+    - setup-hadoop-cluster/authorized
+    - setup-hadoop-cluster/java
+    - setup-hadoop-cluster/hadoop 
+    
+# - hosts: worker_group
+#   become: true
+#   vars:
+#     generate_key: false
+#   roles:
+#     - setup-hadoop-cluster/user
+#     - setup-hadoop-cluster/authorized

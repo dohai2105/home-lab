@@ -1,0 +1,5 @@
+---
+- name: Add Hadoop Public Key to master and wokers's node
+  authorized_key: 
+    user={{ hadoop_user }} 
+    key="{{ lookup('file', '/tmp/{{ master_public_key_file_name }}') }}"

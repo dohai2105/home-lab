@@ -1,0 +1,19 @@
+---
+- name: Download Hadoop
+  get_url: 
+    url: "https://archive.apache.org/dist/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz"
+    dest: "{{ hadoop_tmp }}/hadoop-{{ hadoop_version }}.tar.gz"
+
+- name: Unzip Hadoop
+  shell: "tar zxf {{ hadoop_tmp }}/hadoop-{{hadoop_version}}.tar.gz -C {{ hadoop_home_path }}"
+
+- name: Remove Hadoop Directory if already created
+  shell: "rm -rf {{ hadoop_home_path }}/hadoop"
+
+- name: Rename Hadoop Dir
+  shell: "mv -f {{ hadoop_home_path }}/hadoop-{{ hadoop_version }} {{ hadoop_home_path }}/hadoop"
+
+- name: Remove zip file
+  file:
+    state: absent
+    path: "{{ hadoop_tmp }}"

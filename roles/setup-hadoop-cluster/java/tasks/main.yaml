@@ -1,0 +1,4 @@
+---
+- name: Install java 
+  include_tasks: install-redhat-java.yaml
+  when: ansible_os_family == 'RedHat'

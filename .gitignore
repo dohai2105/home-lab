@@ -1,7 +1,4 @@
 .idea
 .history
-source
-group_vars
-inventories
 .DS_Store
 /.project

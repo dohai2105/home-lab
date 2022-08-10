@@ -1,21 +1,87 @@
+
+## Kubernate variable
 kube_version: v1.23.0
 token: b0f7b8.8d1767876297d85c
 # 1.8.x feature: --feature-gates SelfHosting=true
 init_opts: ""
-
 # Any other additional opts you want to add..
 kubeadm_opts: ""
 # For example:
 # kubeadm_opts: '--apiserver-cert-extra-sans "k8s.domain.com,kubernetes.domain.com"'
-
 service_cidr: "10.96.0.0/12"
 pod_network_cidr: "198.51.100.0/24"
-
 container_runtime: containerd
 kubeadmin_config: /etc/kubernetes/admin.conf
 enable_dashboard: yes
 
-local_dns_hosts:
-  - "192.168.0.101 worker1"
-  - "192.168.0.102 worker2"
-  - "192.168.0.100 master"
+## Hadoop variable
+hadoop_user: "hadoop"
+hadoop_user_group: "hadoop"
+master_public_key_file_name: id_master_{{ hadoop_user }}.pub
+java_packages:
+ - "java-1.8.0-openjdk"
+ - "java-1.8.0-openjdk-devel"
+jvm_home: "/usr/lib/jvm"
+
+hadoop_version: "3.2.2"
+hadoop_home_path: "/home/hadoop"
+hadoop_tmp: "/home/hadoop/tmp"
+hadoop_dfs_name: "/home/hadoop/dfs/nameNode"
+hadoop_dfs_data: "/home/hadoop/dfs/dataNode"
+hadoop_create_path:
+  - "{{ hadoop_tmp }}"
+  - "{{ hadoop_dfs_name }}"
+  - "{{ hadoop_dfs_data }}"
+
+# hadoop configration 
+hdfs_port: 9000
+core_site_properties:
+  - {
+      "name":"fs.defaultFS",
+      "value":"hdfs://{{ master_ip }}:{{ hdfs_port }}"
+  }
+  - {
+      "name":"hadoop.tmp.dir",
+      "value":"file:{{ hadoop_tmp }}"
+  }
+  - {
+    "name":"io.file.buffer.size",
+    "value":"131072"
+  }
+
+dfs_namenode_httpport: 9001
+hdfs_site_properties:
+  - {
+      "name":"dfs.namenode.secondary.http-address",
+      "value":"{{ master_hostname }}:{{ dfs_namenode_httpport }}"
+  }
+  - {
+      "name":"dfs.namenode.name.dir",
+      "value":"file:{{ hadoop_dfs_name }}"
+  }
+  - {
+      "name":"dfs.namenode.data.dir",
+      "value":"file:{{ hadoop_dfs_data }}"
+  }
+  - {
+      "name":"dfs.replication",
+      "value":"{{ groups['workers']|length }}"
+  }
+  - {
+    "name":"dfs.webhdfs.enabled",
+    "value":"true"
+  }
+
+mapred_site_properties:
+ - {
+   "name": "mapreduce.framework.name",
+   "value": "yarn"
+ }
+ - {
+   "name": "mapreduce.admin.user.env",
+   "value": "HADOOP_MAPRED_HOME=$HADOOP_COMMON_HOME"
+ }
+ - {
+   "name":"yarn.app.mapreduce.am.env",
+   "value":"HADOOP_MAPRED_HOME=$HADOOP_COMMON_HOME"
+ }

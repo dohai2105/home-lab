@@ -1,0 +1,21 @@
+---
+- name: Create Hadoop Path
+  file: 
+    path: "{{ item }}"
+    owner: "{{ hadoop_user }}"
+    group: "{{ hadoop_user_group }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "{{ hadoop_create_path }}"
+
+- block: 
+  - name: Install hadoop
+    include_tasks: install_hadoop.yaml
+    vars:
+      del_file_flag: false
+  become: true
+  become_user: "{{ hadoop_user }}"
+
+- name: Config hadoop
+  include_tasks: config_hadoop.yml

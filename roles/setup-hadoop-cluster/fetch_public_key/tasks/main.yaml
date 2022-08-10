@@ -1,0 +1,6 @@
+---
+- name: Save hadoop master's public key to local
+  fetch: 
+    src: /home/{{ hadoop_user }}/.ssh/id_rsa.pub
+    dest: /tmp/{{ master_public_key_file_name }}
+    flat: yes
