@@ -12,4 +12,3 @@ pod_network_cidr: "198.51.100.0/24"
 container_runtime: containerd
 kubeadmin_config: /etc/kubernetes/admin.conf
 enable_dashboard: yes
-

@@ -1,18 +1,34 @@
 - hosts: master
   become: true
+  vars_files:
+    - custom_vars/hadoop.yaml
   vars:
     generate_key: true
+    format_hdfs: true
   roles:
     - setup-hadoop-cluster/user
     - setup-hadoop-cluster/fetch_public_key
     - setup-hadoop-cluster/authorized
     - setup-hadoop-cluster/java
-    - setup-hadoop-cluster/hadoop 
-    
-# - hosts: worker_group
-#   become: true
-#   vars:
-#     generate_key: false
-#   roles:
-#     - setup-hadoop-cluster/user
-#     - setup-hadoop-cluster/authorized
+    - setup-hadoop-cluster/hadoop
+
+- hosts: worker_group
+  become: true
+  vars_files:
+    - custom_vars/hadoop.yaml
+  vars:
+    generate_key: false
+  roles:
+    - setup-hadoop-cluster/user
+    - setup-hadoop-cluster/authorized
+    - setup-hadoop-cluster/java
+    - setup-hadoop-cluster/hadoop
+
+- hosts: master
+  vars_files:
+    - custom_vars/hadoop.yaml
+  become: true
+  become_user: "{{ hadoop_user }}"
+  tasks:
+    - name: Format hdfs
+      shell: "hdfs namenode -format"
