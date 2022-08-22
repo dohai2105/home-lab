@@ -36,7 +36,7 @@ hdfs_site_properties:
   - { "name": "dfs.datanode.data.dir", "value": "file://{{ hadoop_dfs_data }}" }
   - {
       "name": "dfs.replication",
-      "value": "1",
+      "value": "2",
     }
 
 mapred_site_properties:

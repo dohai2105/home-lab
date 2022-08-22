@@ -1,5 +1,9 @@
 [master_group]
 master
+
 [worker_group]
 worker1
 worker2
+
+[monitor_group]
+master

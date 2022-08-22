@@ -1,3 +1,3 @@
 kubernate_node_ip: "192.168.56.102"
 host_name: worker2
-host_ip: 192.168.0.102
+host_ip: 192.168.11.102

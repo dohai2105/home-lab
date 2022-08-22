@@ -24,11 +24,11 @@
     - setup-hadoop-cluster/java
     - setup-hadoop-cluster/hadoop
 
-- hosts: master
-  vars_files:
-    - custom_vars/hadoop.yaml
-  become: true
-  become_user: "{{ hadoop_user }}"
-  tasks:
-    - name: Format hdfs
-      shell: "hdfs namenode -format"
+# - hosts: master
+#   vars_files:
+#     - custom_vars/hadoop.yaml
+#   become: true
+#   become_user: "{{ hadoop_user }}"
+#   tasks:
+#     - name: Format hdfs
+#       shell: "hdfs namenode -format"

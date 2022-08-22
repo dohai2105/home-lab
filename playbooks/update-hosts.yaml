@@ -6,7 +6,6 @@
       lineinfile:
         path: /etc/hosts
         line: "{{ hostvars[item].host_ip }} {{ hostvars[item].host_name }}"
-      when: hostvars[item].host_name is defined
+      when: hostvars[item].host_name is defined and hostvars[item].host_ip != host_ip
       with_items: "{{ groups.all }}"
-    # - name: "dump variables hostvars"
-    #   debug: var=local_dns_hosts
+

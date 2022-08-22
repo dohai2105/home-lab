@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
     node.vm.box_check_update  = false
     node.vm.hostname          = "master.local.com"
 
-    node.vm.network "public_network", ip: "192.168.0.100"
+    node.vm.network "public_network", ip: "192.168.11.100"
 
     node.vm.provider :virtualbox do |v|
       v.name    = "master"
@@ -29,7 +29,7 @@ Vagrant.configure(2) do |config|
 
     node.vm.provision "shell",
       run: "always",
-      inline: "route add default gw 192.168.0.1"
+      inline: "route add default gw 192.168.11.1"
     # node.vm.provision "shell", path: "bootstrap_kmaster.sh"
 
   # delete default gw on eth0
@@ -50,7 +50,7 @@ Vagrant.configure(2) do |config|
       node.vm.box_check_update  = false
       node.vm.hostname          = "worker#{i}.local.com"
 
-      node.vm.network "public_network", ip: "192.168.0.10#{i}"
+      node.vm.network "public_network", ip: "192.168.11.10#{i}"
 
       node.vm.provider :virtualbox do |v|
         v.name    = "worker#{i}"
@@ -59,7 +59,7 @@ Vagrant.configure(2) do |config|
 
       node.vm.provision "shell",
         run: "always",
-        inline: "route add default gw 192.168.0.1"
+        inline: "route add default gw 192.168.11.1"
       # node.vm.provision "shell", path: "bootstrap_kmaster.sh"
   
       # delete default gw on eth0

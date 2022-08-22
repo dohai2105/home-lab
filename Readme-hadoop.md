@@ -21,6 +21,10 @@ The NodeManager manages execution of tasks on the node.
 ## Useful command
 
 ```
+
+#Switch to hadoop user
+sudo su hadoop
+
 # Start hdfs
 start-dfs.sh
 
@@ -36,6 +40,20 @@ start-yarn.sh
 # Stop yarn
 stop-yarn.sh
 
+#Start all
+start-all.sh
+
+# Stop all
+stop-all.sh
+
+```
+
+## Trouble shot
+
+```
+#Log file
+sudo su hadoop
+cd hadoop_logs/
 ```
 
 
@@ -49,13 +67,14 @@ stop-yarn.sh
 ### Issue
 
 ```
-2022-08-11 14:14:41,030 INFO org.apache.hadoop.ipc.Client: Retrying connect to server: master/192.168.0.100:51119. Already tried 5 time(s); retry policy is RetryUpToMaximumCountWithFixedSleep(maxRetries=10, sleepTime=1000 MILLISECONDS)
+2022-08-11 14:14:41,030 INFO org.apache.hadoop.ipc.Client: Retrying connect to server: master/192.168.11.100:51119. Already tried 5 time(s); retry policy is RetryUpToMaximumCountWithFixedSleep(maxRetries=10, sleepTime=1000 MILLISECONDS)
 ```
 
 ### Possible solution
-1. Kill all process
+1. Kill all process (netstat -tuplen)
 2. Run `hdfs datanode -format` on wokers node
 3. Comment out following line of /etc/hosts on master node
 ```
 #127.0.1.1 master.local.com master
 ```
+4. Detele cache on /hadoop/dfs/namenode and /hadoop/dfs/datanode
