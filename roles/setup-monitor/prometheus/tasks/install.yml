@@ -49,14 +49,14 @@
       delegate_to: localhost
       check_mode: false
 
-    # - name: unpack prometheus binaries
-    #   become: false
-    #   unarchive:
-    #     src: /tmp/prometheus-{{ prometheus_version }}.linux-{{ go_arch }}.tar.gz
-    #     dest: /tmp
-    #     creates: /tmp/prometheus-{{ prometheus_version }}.linux-{{ go_arch }}/prometheus
-    #   delegate_to: localhost
-    #   check_mode: false
+    - name: unpack prometheus binaries
+      become: false
+      unarchive:
+        src: "/tmp/prometheus-{{ prometheus_version }}.linux-{{ go_arch }}.tar.gz"
+        dest: "/tmp"
+        creates: "/tmp/prometheus-{{ prometheus_version }}.linux-{{ go_arch }}/prometheus"
+      delegate_to: localhost
+      check_mode: false
 
     - name: propagate official prometheus and promtool binaries
       copy:
