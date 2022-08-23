@@ -5,5 +5,13 @@ master
 worker1
 worker2
 
-[monitor_group]
+[prometheus_group]
+master
+
+[node_exporter_group]
+master
+worker1
+worker2
+
+[gafana_group]
 master

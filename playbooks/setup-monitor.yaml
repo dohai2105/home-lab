@@ -1,3 +1,17 @@
-- hosts: monitor_group
+- hosts: prometheus_group
   roles:
     - role: setup-monitor/prometheus
+  tags: 
+    - setup-prometheus
+
+- hosts: node_exporter_group
+  roles:
+    - role: setup-monitor/node-exporter
+  tags:
+    - setup-node-exporter
+
+- hosts: master
+  roles:
+    - role: setup-monitor/gafana
+  tags:
+    - setup-node-exporter
