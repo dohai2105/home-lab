@@ -5,6 +5,8 @@ master
 worker1
 worker2
 
+
+## PROMETHEUS setting
 [prometheus_group]
 master
 
@@ -15,3 +17,11 @@ worker2
 
 [gafana_group]
 master
+
+## ELK setting
+[elk_master_group]
+master
+
+[elk_data_group]
+worker1
+worker2

@@ -1,0 +1,7 @@
+ELASTIC_SEARCH_REPO_LOCATION: "/etc/yum.repos.d/elasticsearch.repo"
+ELASTIC_SEARCH_YAML: "/etc/elasticsearch/elasticsearch.yml"
+ELASTIC_SEARCH_JVM_OPTION: "/etc/elasticsearch/jvm.options"
+ELASTIC_SEARCH_LOG_FOLDER: "/usr/share/elasticsearch/logs"
+ELASTIC_SEARCH_DATA_FOLDER: "/usr/share/elasticsearch/data"
+
+CLUSTER_NAME: "ELK_CLUSTER"

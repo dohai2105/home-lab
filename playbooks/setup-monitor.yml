@@ -14,4 +14,4 @@
   roles:
     - role: setup-monitor/gafana
   tags:
-    - setup-node-exporter
+    - setup-gafana

@@ -1,0 +1,20 @@
+- hosts:
+    - elk_master_group
+    - elk_data_group
+  become: true
+  roles:
+    - role: setup-elk/elasticsearch
+  tags:
+    - setup-elk
+
+- hosts:
+    - elk_master_group
+    - elk_data_group
+  become: true
+  tasks:
+    - name: Remove elastic search
+      yum:
+        name: [elasticsearch]
+        state: absent
+  tags:
+    - delete-elk
